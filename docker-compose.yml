@@ -1,0 +1,43 @@
+version: '3.4'
+
+networks:
+  nginx-balancer-network:
+    driver: bridge
+
+services:
+
+  nginx-proxy-balancer:
+    image: nginx
+    container_name: nginx-balancer
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports: 
+      - "8000:80"
+    networks:
+      - nginx-balancer-network    
+
+  web-blue-1:
+    image: fabricioveronez/web-page:blue   
+    networks:
+    - nginx-balancer-network    
+
+  web-blue-2:
+    image: fabricioveronez/web-page:blue   
+    networks:
+    - nginx-balancer-network    
+
+  web-green-1:
+    image: fabricioveronez/web-page:green  
+    networks:
+    - nginx-balancer-network    
+
+  web-green-2:
+    image: fabricioveronez/web-page:green  
+    networks:
+    - nginx-balancer-network       
+        
+
+ 
+
+  
+
